@@ -11,7 +11,6 @@ class Message(models.Model):
     class Meta:
         ordering = ['created']
 
-
 class ThreadManager(models.Manager):
     def find(self, user1, user2):
         queryset = self.filter(users=user1).filter(users=user2)
@@ -26,6 +25,7 @@ class ThreadManager(models.Manager):
             thread.users.add(user1, user2)
         return thread
         
+
 class Thread(models.Model):
     users = models.ManyToManyField(User, related_name='threads')
     messages = models.ManyToManyField(Message)
@@ -35,7 +35,7 @@ class Thread(models.Model):
 
     class Meta:
         ordering = ['-updated']
-    
+
 
 def messages_changed(sender, **kwargs):
     instance = kwargs.pop("instance", None)
